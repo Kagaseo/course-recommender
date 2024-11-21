@@ -1,0 +1,18 @@
+# [Type] Short description of changes
+
+# Type can be:
+# - feat:     A new feature
+# - fix:      A bug fix
+# - docs:     Documentation changes
+# - style:    Formatting, missing semi-colons, etc
+# - refactor: Refactoring code
+# - test:     Adding or modifying tests
+# - chore:    Maintenance tasks
+
+# Optional body: More detailed explanation of changes
+# Explain the motivation for the change and contrast 
+# it with the previous behavior
+
+# Optional footer: Reference issues, breaking changes, etc
+# Closes #123
+# BREAKING CHANGE: Describe any breaking changes
