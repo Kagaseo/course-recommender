@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 240 10% 3.9%;
@@ -36,13 +36,64 @@
   }
 }
 
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  position: relative;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
   
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-200 via-purple-300 to-indigo-200;
+  }
+
+  .bg-gradient-dark {
+    @apply bg-gradient-to-b from-black via-purple-950/20 to-black;
+  }
+
+  .bg-gradient-section {
+    @apply bg-gradient-to-b from-purple-900/20 via-black/40 to-black/60;
+  }
+
+  .animate-in {
+    animation: animate-in 0.5s ease-out;
+  }
+
+  .slide-in-from-top {
+    animation: slide-in-from-top 0.5s ease-out;
+  }
+
+  .slide-in-from-bottom {
+    animation: slide-in-from-bottom 0.5s ease-out;
+  }
+
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .grid-background {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }
 
@@ -64,19 +115,7 @@
   @apply bg-muted/80;
 }
 
-/* Animation Classes */
-.animate-in {
-  animation: animate-in 0.5s ease-out;
-}
-
-.slide-in-from-top {
-  animation: slide-in-from-top 0.5s ease-out;
-}
-
-.slide-in-from-bottom {
-  animation: slide-in-from-bottom 0.5s ease-out;
-}
-
+/* Keyframe Animations */
 @keyframes animate-in {
   from {
     opacity: 0;
@@ -108,4 +147,44 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes glow {
+  0%, 100% {
+    opacity: 0.5;
+    box-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.2),
+      0 0 30px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.4),
+      0 0 30px rgba(255, 255, 255, 0.3),
+      0 0 45px rgba(255, 255, 255, 0.2);
+  }
+}
+
+.section-separator {
+  position: relative;
+  height: 1px;
+  width: 100%;
+}
+
+.section-separator::before,
+.section-separator::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.section-separator::before {
+  filter: blur(4px);
+  animation: glow 3s ease-in-out infinite;
+}
+
+.section-separator::after {
+  animation: glow 3s ease-in-out infinite reverse;
 }
