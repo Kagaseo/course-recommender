@@ -2,7 +2,11 @@ import { FC } from 'react';
 import { motion as m, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
-const Footer: FC = () => {
+interface FooterProps {
+  className?: string;
+}
+
+export default function Footer({ className }: FooterProps) {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
 
@@ -51,7 +55,7 @@ const Footer: FC = () => {
   return (
     <m.footer 
       ref={footerRef}
-      className="min-h-screen w-full flex flex-col justify-center bg-gradient-to-b from-background via-background/95 to-black/90 relative"
+      className={className}
       initial={{ opacity: 0 }}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1 }}
@@ -199,6 +203,4 @@ const Footer: FC = () => {
       </div>
     </m.footer>
   );
-};
-
-export { Footer };
+}

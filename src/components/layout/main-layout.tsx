@@ -1,8 +1,8 @@
 'use client';
 
-import { Header } from "./header";
-import { Footer } from "./footer";
-import { ScrollIndicator } from "@/components/ScrollIndicator";
+import Header from "./header";
+import Footer from "./footer";
+import ScrollIndicator from "@/components/ScrollIndicator";
 import { motion } from "framer-motion";
 
 interface MainLayoutProps {

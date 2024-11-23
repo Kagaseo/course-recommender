@@ -3,7 +3,7 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export const ScrollIndicator = () => {
+export default function ScrollIndicator() {
   const { scrollYProgress } = useScroll();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -36,6 +36,4 @@ export const ScrollIndicator = () => {
       transition={{ duration: 0.3 }}
     />
   );
-};
-
-export default ScrollIndicator;
+}
