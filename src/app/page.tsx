@@ -5,9 +5,11 @@ import Image from "next/image";
 import { motion as m, AnimatePresence, useMotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Code, Palette, BarChart, Star, ArrowRight } from "lucide-react";
-import { Footer } from "@/components/layout/footer";
+import Footer from "@/components/layout/footer";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import CustomCursor from "@/components/ui/custom-cursor";
+import MagneticButton from "@/components/ui/magnetic-button";
 
 // Animation variants
 const fadeInVariants = {
@@ -34,76 +36,6 @@ const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
   hover: { y: -5, transition: { duration: 0.2 } }
-};
-
-// Custom cursor component
-const CustomCursor = () => {
-  const cursorX = useMotionValue(0);
-  const cursorY = useMotionValue(0);
-
-  useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 16);
-      cursorY.set(e.clientY - 16);
-    };
-
-    window.addEventListener('mousemove', moveCursor);
-    return () => window.removeEventListener('mousemove', moveCursor);
-  }, [cursorX, cursorY]);
-
-  return (
-    <m.div
-      className="fixed w-8 h-8 pointer-events-none z-50 mix-blend-difference"
-      style={{
-        x: cursorX,
-        y: cursorY,
-      }}
-    >
-      <div className="relative w-full h-full">
-        <div className="absolute inset-0 bg-white rounded-full scale-50 opacity-40" />
-        <div className="absolute inset-0 bg-white rounded-full scale-100 blur-sm opacity-20" />
-      </div>
-    </m.div>
-  );
-};
-
-// Magnetic button component
-const MagneticButton = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!buttonRef.current) return;
-
-    const rect = buttonRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    const distanceX = e.clientX - centerX;
-    const distanceY = e.clientY - centerY;
-    
-    setPosition({ 
-      x: distanceX * 0.4,
-      y: distanceY * 0.4
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setPosition({ x: 0, y: 0 });
-  };
-
-  return (
-    <m.div
-      ref={buttonRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
-      className={cn("inline-block", className)}
-    >
-      {children}
-    </m.div>
-  );
 };
 
 // Featured courses data
