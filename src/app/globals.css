@@ -33,21 +33,30 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  html {
+    @apply scroll-smooth;
+    height: 100%;
   }
 }
 
 .layout-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: relative;
-  z-index: 10;
+  @apply flex flex-col min-h-screen relative z-10;
 }
 
 .main-content {
-  flex: 1;
-  width: 100%;
-  position: relative;
+  @apply flex-1 w-full relative;
+}
+
+.section-container {
+  @apply relative min-h-screen flex flex-col justify-center items-center py-24 px-4;
+}
+
+.footer-wrapper {
+  @apply relative w-full bg-gradient-to-b from-background to-black/90;
 }
 
 @layer utilities {

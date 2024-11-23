@@ -1,14 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Menu, X, Bell, MessageSquare, User, Settings, LogOut, UserCircle } from 'lucide-react';
 
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
+  { name: 'Courses', href: '/courses' },
 ];
 
 const profileMenuItems = [
@@ -32,186 +33,202 @@ const profileMenuItems = [
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  // Close profile menu when clicking outside
-  const handleClickOutside = () => {
-    setIsProfileOpen(false);
-  };
+  const { scrollY } = useScroll();
+  
+  // Transform values for scroll-based animations
+  const navBgOpacity = useTransform(scrollY, [0, 100], [0.5, 0.8]);
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="relative h-8 w-8">
-              <motion.div 
-                className="absolute inset-0 rotate-6 rounded bg-primary/20"
-                whileHover={{ rotate: 12 }}
-                transition={{ duration: 0.2 }}
+    <header className="fixed top-0 z-50 w-full">
+      <m.div 
+        className="absolute inset-0 bg-black/20 backdrop-blur-xl"
+        style={{ opacity: navBgOpacity }}
+      />
+      
+      <div className="container relative flex h-16 items-center justify-between px-4">
+        {/* Logo */}
+        <m.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
+          <Link href="/" className="flex items-center space-x-3 group relative">
+            <div className="relative h-10 w-10">
+              {/* Logo background effects */}
+              <m.div 
+                className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/20 to-violet-500/20"
+                animate={{ 
+                  rotate: [0, 10, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{ 
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
               />
-              <motion.div 
-                className="absolute inset-0 -rotate-6 rounded bg-primary/20"
-                whileHover={{ rotate: -12 }}
-                transition={{ duration: 0.2 }}
+              <m.div 
+                className="absolute inset-0 rounded-lg bg-gradient-to-r from-violet-500/20 to-blue-500/20"
+                animate={{ 
+                  rotate: [0, -10, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{ 
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
               />
-              <div className="absolute inset-0 rounded bg-primary flex items-center justify-center">
-                <span className="text-lg font-bold text-primary-foreground">CC</span>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500 via-violet-500 to-purple-500 flex items-center justify-center">
+                <span className="text-lg font-bold text-white">CC</span>
               </div>
             </div>
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60 group-hover:to-primary/80 transition-colors">
-              CourseCompass
-            </span>
-          </Link>
-          
-          <nav className="hidden md:flex gap-6">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  'relative text-sm font-medium transition-colors hover:text-primary group',
-                  'text-muted-foreground'
-                )}
-              >
-                {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Desktop Icons */}
-          <div className="hidden md:flex items-center gap-2">
-            <button className="p-2 hover:bg-accent rounded-full relative group">
-              <Bell size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full" />
-            </button>
-            <button className="p-2 hover:bg-accent rounded-full relative group">
-              <MessageSquare size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full" />
-            </button>
+            
+            {/* Logo text with lamp effect */}
             <div className="relative">
-              <button 
-                onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className={cn(
-                  "p-2 rounded-full group transition-colors",
-                  isProfileOpen ? "bg-accent" : "hover:bg-accent"
-                )}
-              >
-                <User size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
-              </button>
-
-              <AnimatePresence>
-                {isProfileOpen && (
-                  <>
-                    {/* Invisible overlay to handle clicking outside */}
-                    <div 
-                      className="fixed inset-0 z-40"
-                      onClick={handleClickOutside}
-                    />
-                    
-                    {/* Dropdown menu */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-2 w-56 rounded-xl border bg-background/80 backdrop-blur-sm shadow-lg z-50"
-                    >
-                      <div className="p-2">
-                        <div className="p-2 mb-2">
-                          <div className="font-medium">John Doe</div>
-                          <div className="text-sm text-muted-foreground">john@example.com</div>
-                        </div>
-                        <div className="h-px bg-border" />
-                        {profileMenuItems.map((item, index) => {
-                          const Icon = item.icon;
-                          return (
-                            <Link
-                              key={index}
-                              href={item.href}
-                              onClick={() => setIsProfileOpen(false)}
-                              className={cn(
-                                "flex items-center gap-2 w-full p-2 rounded-md text-sm",
-                                "hover:bg-accent transition-colors",
-                                item.label === 'Sign Out' && "text-red-500 hover:text-red-500"
-                              )}
-                            >
-                              <Icon size={16} />
-                              {item.label}
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
+              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400 group-hover:opacity-80 transition-all duration-300">
+                Course Compass
+              </span>
+              <div className="absolute -inset-x-6 -inset-y-4 -z-10 hidden group-hover:block">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-violet-500/20 to-purple-500/20 blur-2xl rounded-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent rounded-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-l from-purple-500/10 to-transparent rounded-2xl" />
+              </div>
             </div>
+          </Link>
+        </m.div>
+
+        {/* Centered Navigation */}
+        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2">
+          <div className="flex items-center gap-8">
+            {navigation.map((item) => (
+              <m.div
+                key={item.name}
+                whileHover={{ y: -2 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <Link 
+                  href={item.href}
+                  className="relative text-base font-medium text-white/70 hover:text-white transition-all duration-200 group"
+                >
+                  {item.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-blue-400 to-violet-400 group-hover:w-full transition-all duration-300" />
+                </Link>
+              </m.div>
+            ))}
+          </div>
+        </nav>
+
+        {/* Right Side Icons */}
+        <div className="flex items-center gap-3">
+          {/* Notification Icon */}
+          <m.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative p-2 rounded-full bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-violet-500/20 hover:to-purple-500/20 transition-all duration-200"
+          >
+            <Bell className="w-5 h-5 text-white/70" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full" />
+          </m.button>
+
+          {/* Chat Icon */}
+          <m.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative p-2 rounded-full bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-violet-500/20 hover:to-purple-500/20 transition-all duration-200"
+          >
+            <MessageSquare className="w-5 h-5 text-white/70" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full" />
+          </m.button>
+
+          {/* Profile Menu */}
+          <div className="relative">
+            <m.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsProfileOpen(!isProfileOpen)}
+              className="relative p-2 rounded-full bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-violet-500/20 hover:to-purple-500/20 transition-all duration-200"
+            >
+              <User className="w-5 h-5 text-white/70" />
+            </m.button>
+
+            <AnimatePresence>
+              {isProfileOpen && (
+                <>
+                  <m.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-40"
+                    onClick={() => setIsProfileOpen(false)}
+                  />
+                  <m.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute right-0 mt-2 w-48 rounded-xl border border-white/10 bg-black/50 backdrop-blur-md p-1 shadow-xl"
+                  >
+                    {profileMenuItems.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                      >
+                        <item.icon size={18} />
+                        {item.label}
+                      </Link>
+                    ))}
+                  </m.div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 hover:bg-accent rounded-full"
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          {/* Mobile menu button */}
+          <div className="flex md:hidden">
+            <m.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsOpen(!isOpen)}
+              className="relative p-2 rounded-full bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-violet-500/20 hover:to-purple-500/20 transition-all duration-200"
+            >
+              {isOpen ? (
+                <X className="w-5 h-5 text-white/70" />
+              ) : (
+                <Menu className="w-5 h-5 text-white/70" />
+              )}
+            </m.button>
+          </div>
         </div>
       </div>
 
+      {/* Navigation Light Beam */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent shadow-sm shadow-white/20" />
+        <div className="h-[6px] bg-gradient-to-r from-transparent via-white/10 to-transparent blur-[3px]" />
+      </div>
+
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t bg-background"
+            className="md:hidden border-t border-white/10 bg-black/50 backdrop-blur-md"
           >
-            <nav className="container py-4 flex flex-col gap-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-accent/50 rounded-lg transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
-              {/* Mobile Icons */}
-              <div className="mt-2 px-4 py-2 flex flex-col gap-2 border-t">
-                <button className="flex items-center gap-2 p-2 hover:bg-accent/50 rounded-lg transition-colors">
-                  <Bell size={20} className="text-muted-foreground" />
-                  <span className="text-sm font-medium text-muted-foreground">Notifications</span>
-                  <span className="ml-auto w-2 h-2 bg-primary rounded-full" />
-                </button>
-                <button className="flex items-center gap-2 p-2 hover:bg-accent/50 rounded-lg transition-colors">
-                  <MessageSquare size={20} className="text-muted-foreground" />
-                  <span className="text-sm font-medium text-muted-foreground">Messages</span>
-                  <span className="ml-auto w-2 h-2 bg-primary rounded-full" />
-                </button>
-                {profileMenuItems.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={index}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        "flex items-center gap-2 p-2 hover:bg-accent/50 rounded-lg transition-colors",
-                        item.label === 'Sign Out' && "text-red-500"
-                      )}
-                    >
-                      <Icon size={20} />
-                      <span className="text-sm font-medium">{item.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </nav>
-          </motion.div>
+            <div className="container py-4">
+              <nav className="flex flex-col gap-2">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

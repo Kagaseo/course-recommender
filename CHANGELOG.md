@@ -1,105 +1,135 @@
 # Changelog
 
-All notable changes to the CourseCompass project will be documented in this file.
-
 ## [Unreleased]
 
-### Added
-- Full-screen sections with snap scrolling
-- Animated glowing separators between page sections
-- Enhanced dark theme consistency across all sections
-- Smooth scroll animations using Framer Motion:
-  - Fade-in-up animations for content sections
-  - Staggered animations for child elements
-  - Viewport-based triggers for better performance
-- Gradient backgrounds for section differentiation
-- 4 featured courses display
-- Enhanced animation system using Framer Motion:
-  - Spring-based animations for natural movement
-  - Sophisticated hover effects on course cards
-  - Staggered animations with configurable delays
-  - Scroll-triggered animations with InView
-- Advanced gradient system:
-  - Multi-layer background gradients
-  - Text gradients for headings
-  - Button gradients with hover states
-  - Semi-transparent overlays with blur effects
-- Improved UI components:
-  - Redesigned course cards with hover animations
-  - Enhanced CTA buttons with gradient backgrounds
-  - Optimized layout structure for better flow
-  - Added ring effects and subtle shadows
+## [v0.3.5] - 2024-01-09
+
+### 🌟 Navigation Header Light Effect (Checkpoint: LAMP_EFFECT_V1)
+- Implemented new conic gradient-based lamp effect
+  - Single-color blue theme (blue-400/blue-500)
+  - Centered light beam with left and right conic gradients
+  - Reduced height to 400px for better visibility
+- Added layered glow effects:
+  - Central beam with blur effects
+  - Top light line with animations
+  - Ambient glow with opacity transitions
+- Enhanced animations:
+  - Smooth width transitions (15rem to 30rem)
+  - Subtle opacity animations
+  - Synchronized timing across elements
+- Optimized positioning:
+  - Higher placement for better visibility
+  - Improved masking for clean edges
+  - Better z-index layering
+
+## [v0.3.4] - 2024-01-09
 
 ### Changed
-- Implemented snap scrolling behavior for better navigation
-- Updated section layouts to full viewport height
-- Relocated CTA buttons to hero section for better visibility
-- Updated button links to correct pages (signin and courses)
-- Simplified homepage layout:
-  - Removed Category Highlights section
-  - Streamlined CTA section
-- Improved dark theme implementation:
-  - Consistent dark backgrounds
-  - Semi-transparent overlays
-  - Gradient text effects
-- Converted homepage to client component for animations
-- Updated animation configurations:
-  - Optimized spring physics parameters
-  - Refined timing and easing curves
-  - Improved performance with selective animation triggers
-- Enhanced visual hierarchy:
-  - Consistent color palette throughout
-  - Better contrast ratios for accessibility
-  - Refined spacing and typography scale
-- Modernized dark theme:
-  - Rich purple and indigo gradients
-  - Sophisticated transparency effects
-  - Improved visual depth with layered backgrounds
+- Optimized mouse tracking light effect positioning
+  - Moved indicator 35% above cursor position
+  - Improved visual alignment with content
+  - Enhanced user interaction feedback
+- Fine-tuned section separator lights
+  - Removed blur effect for cleaner appearance
+  - Adjusted opacity levels for better visibility
 
-### Project Setup
-- Initialized Next.js 14 project with TypeScript
-- Configured Tailwind CSS for styling
-- Set up Python FastAPI backend
-- Created project structure for machine learning-powered course recommender
+## [v0.3.3] - 2024-01-09
 
-### Backend Development
-- Created backend directory structure
-  - `/backend/app/`
-    - `core/`: Configuration management
-    - `models/`: Database and data models
-    - `services/`: Business logic and ML services
-    - `api/`: API route handlers
-  - `/backend/data/`: Data storage directory
+### Added
+- New AI Recommendations section with personalized course cards
+- Full-page section layout with smooth scroll snapping
+- Enhanced section separator lights with multi-color gradients
+- Custom smooth scrolling behavior with section-by-section navigation
+- Debounced scroll handling for better performance
 
-### Configuration Files
-- Added `requirements.txt` for Python dependencies
-- Created `next.config.js` for Next.js configuration
-- Set up `tailwind.config.ts` for styling
-- Configured `tsconfig.json` for TypeScript
+### Changed
+- Updated all sections to take full viewport height
+- Enhanced section transitions with improved timing
+- Improved cursor light effect with larger radius (800px)
+- Optimized animation sequences for smoother transitions
+- Refined gradient overlays between sections
 
-### Machine Learning Components
-- Implemented content-based recommendation system
-- Created TF-IDF vectorization for course similarity
-- Developed cosine similarity matching algorithm
-- Added model persistence using joblib
+### Fixed
+- Section separation visibility issues
+- Scroll behavior inconsistencies
+- Animation timing and synchronization
+- Layout responsiveness in full-page sections
 
-### Frontend Progress
-- Created basic components:
-  - Header
-  - Footer
-  - Home Page
-  - Coming Soon Page
-  - Initial AI Recommendations Page
+## [v0.3.2] - 2024-01-09
 
-### Environment Management
-- Set up Python virtual environment
-- Cleaned up duplicate virtual environments
-- Organized project dependencies
+### ✨ Hero Section Enhancements
+- Removed "Welcome to Course Compass" section for cleaner hero layout
+- Increased main heading size for stronger visual impact (text-6xl/text-8xl)
+- Enhanced subheading typography (text-xl/text-2xl)
+- Optimized animation timing and sequences
 
-### Planned Features
-- User authentication system
-- Dynamic course recommendation engine
-- User feedback mechanism for recommendations
+### 🎨 Animation Refinements
+- Simplified animation structure for better performance
+- Retained magnetic button effects with smooth transitions
+- Maintained floating background elements with easeInOut transitions
+- Streamlined animation delays for better user experience
+
+## [v0.3.1] - 2024-01-09
+
+### 🎨 Layout Improvements
+- Optimized hero section layout for better scroll indicator visibility
+- Enhanced content distribution with flex column layout
+- Improved vertical spacing and content positioning
+- Adjusted scroll indicator position for better initial visibility
+
+### 🔧 Technical Updates
+- Refined useInView hook implementation
+- Optimized animation triggers
+- Improved responsive behavior
+- Enhanced layout structure with explicit height control
+
+## [v0.3.0] - 2024-01-09
+
+### ✨ Enhanced UI & Typography
+- Implemented modern gradient text effects across all sections
+- Added futuristic glow effects to interactive elements
+- Enhanced text visibility with optimized contrast and spacing
+- Introduced subtle backdrop blur effects for depth
+
+### 🎨 Design Improvements
+- Added elegant white separator lines between sections
+- Refined gradient overlays on course cards for better image visibility
+- Updated button styles with hover animations and glows
+- Improved category tags with modern borders and shadows
+
+### 💄 Style Updates
+- Enhanced heading typography with gradient effects
+- Optimized text readability with adjusted weights and spacing
+- Implemented consistent color scheme across sections
+- Added subtle animations to interactive elements
+
+## [v0.2.0] - 2024-01-08
+
+### 🏗 Layout
+- Transformed featured courses section into Bento Grid layout
+- Updated course list from 4 to 5 tiles
+- Adjusted course tile sizes and styles
+- Improved scroll behavior and animations
+
+### 🎨 Design
+- Implemented dark theme with gradient accents
+- Added gradient overlays to course images
+- Enhanced visual hierarchy in course cards
+- Improved responsive design across breakpoints
+
+### 🔧 Configuration
+- Added Unsplash domain to next.config.js
+- Updated image handling configuration
+- Optimized layout breakpoints
+
+## [v0.1.0] - 2024-01-07
+
+### 🎉 Initial Release
+- Created Next.js 14 project structure
+- Implemented basic routing system
+- Added core components
+- Set up initial styling with Tailwind CSS
+- Integrated Framer Motion for animations
 
 ## [1.0.0] - 2024-02-21
 
@@ -286,4 +316,62 @@ git tag -a v0.2.0 -m "Layout refinements and scroll improvements"
 ### Git Tag
 ```bash
 git tag -a v0.1.0 -m "Initial project setup with core features"
+
+## [Unreleased]
+
+### Added
+- Smooth section-based scrolling with scroll locking
+- Section separator lights with gradient effects
+- Mouse-following light effect
+- Animated hero section with floating elements
+- Magnetic button interactions
+- Custom cursor with blend mode effects
+- Featured courses grid with hover animations
+- Testimonials section
+- AI recommendations section
+
+### Changed
+- Moved all animations and interactions into page.tsx
+- Simplified component structure for better performance
+- Enhanced visual design with gradients and lighting effects
+- Improved scroll behavior with section tracking
+
+### Removed
+- Separate component files (magnetic-button.tsx, custom-cursor.tsx, constants.ts)
+- LampDemo component in favor of integrated hero section
+- External constants and animations
+
+### Technical Details
+- All UI components now live in page.tsx for better control
+- Scroll behavior uses refs and event listeners
+- Animation variants defined locally
+- Custom hooks for mouse tracking and scroll progress
+
+### Current State
+- Fully functional smooth scrolling between sections
+- Interactive UI elements with hover effects
+- Modern dark theme with gradient accents
+- Responsive layout for all screen sizes
+
+### File Structure
 ```
+src/
+  app/
+    page.tsx       - Main component with all UI logic
+    layout.tsx     - Root layout
+  lib/
+    utils.ts       - Utility functions
+```
+
+### Key Features Working
+- Section-based navigation
+- Magnetic buttons
+- Custom cursor
+- Floating animations
+- Course cards with hover effects
+- Testimonial cards
+- AI recommendation cards
+- Mouse-following light effect
+- Section separator gradients
+
+This version serves as a stable checkpoint for the core UI functionality and animations.

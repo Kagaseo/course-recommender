@@ -11,10 +11,6 @@ const MainLayout = dynamic(() => import("@/components/layout/main-layout"), {
   ssr: true
 });
 
-const ScrollAnimationWrapper = dynamic(() => import("@/components/ScrollAnimationWrapper"), {
-  ssr: false
-});
-
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
@@ -47,11 +43,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
-        <ScrollAnimationWrapper>
-          <MainLayout>
-            {children}
-          </MainLayout>
-        </ScrollAnimationWrapper>
+        <MainLayout>
+          {children}
+        </MainLayout>
       </body>
     </html>
   );
